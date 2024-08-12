@@ -47,3 +47,17 @@ int main(){
   server.sin_addr.s_addr = INADDR_ANY;
   bzero(&server.sin_zero, 0);
 }
+
+if((bind(server_socket,(struct sockaddr *)&server,sizeof(struct sockaddr_in)))==-1)
+{
+  perror("bind error: ");
+  exit(-1);
+}
+
+if((listen(server_socket,8))==-1)
+{
+  perror("listen error: ");
+  exit(-1);
+}
+
+
