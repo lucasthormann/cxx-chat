@@ -107,3 +107,35 @@ void shared_print(string str, bool endLine = true){
     cout << endl;
   }
 }
+
+// broadcast message to all clients except for sender
+int broadcast_message(string message, int sender_id){
+  char temp[MAX_LEN];
+  strcpy(temp, message.c_str());
+  for(int i = 0; i < clients.size(); i++){
+    if(clients[i].id != sender_id){
+      send(clients[i].socket, temp, sizeof(temp), 0);
+    }
+  }
+}
+
+// broadcast a number to all clients except the sender
+int broadcast_message(int num, int send_id){
+  for(int i = 0; i < clients.size(); i++){
+    if(clients[i].id != sender_id){
+      send(clients[i].socket, &num, sizeof(num), 0);
+    }
+  }
+}
+
+void end_connection(int id){
+  for(int i = 0; i < clients.size(); i++){
+    if(clients[i].id == id){
+      lock_guard<mutex> guard(clients_mtx);
+      clients[i].th.detach();
+      clients.erase(clients.begin()+i);
+      close(clients[i].socket);
+      break;
+    }
+  }
+}
