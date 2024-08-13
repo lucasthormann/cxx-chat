@@ -85,3 +85,25 @@ int main(){
   close(server_socket);
   return 0;
 }
+
+string color(int code){
+  return colors[code%NUM_COLORS];
+}
+
+// set name of client in chat app
+void set_name(int id, char name[]){
+  for(int i = 0; i < clients.size(); i++){
+    if(clients[i].id == id){
+      client[i].name = string(name);
+    }
+  }
+}
+
+// for synchronization of cout statements
+void shared_print(string str, bool endLine = true){
+  lock_guard<mutex> guard(cout_mtx);
+  cout << str;
+  if(endLine){
+    cout << endl;
+  }
+}
