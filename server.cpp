@@ -46,18 +46,42 @@ int main(){
   server.sin_port = htons(10000);
   server.sin_addr.s_addr = INADDR_ANY;
   bzero(&server.sin_zero, 0);
+
+  if((bind(server_socket,(struct sockaddr *)&server,sizeof(struct sockaddr_in)))==-1)
+  {
+   perror("bind error: ");
+    exit(-1);
+  }
+
+  if((listen(server_socket,8))==-1)
+  {
+    perror("listen error: ");
+    exit(-1);
+  }
+
+  struct sockaddr_in client;
+  int client_socket;
+  unsigned int len = sizeof(sockaddr_in);
+
+  cout << color[NUM_COLORS-1] << "\n\t ====== Welcome to the TalkALot Chat Haus ======   " << endl << def_col;
+
+  while(1){
+    if((client_socket = accept(server_socket, (struct sockaddr *) &client, &len)) == -1){
+      perror("accept error: ");
+      exit(-1);
+    }
+    seed++;
+    thread t(handle_client, client_socket, seed);
+    lock_guard<mutex> guard(clients_mtx);
+    clients.push_back({seed, string("Anonymous"), client_socket, (move(t))});
+  }
+  
+  for(int i = 0; i < clients.size(); i++){
+    if(clients[i].th.joinable()){
+      clients[i].th.join();
+    }
+  }
+  
+  close(server_socket);
+  return 0;
 }
-
-if((bind(server_socket,(struct sockaddr *)&server,sizeof(struct sockaddr_in)))==-1)
-{
-  perror("bind error: ");
-  exit(-1);
-}
-
-if((listen(server_socket,8))==-1)
-{
-  perror("listen error: ");
-  exit(-1);
-}
-
-
