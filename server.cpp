@@ -139,3 +139,37 @@ void end_connection(int id){
     }
   }
 }
+
+void handle_client(int client_socket, int id){
+  char name[MAX_LEN], str[MAX_LEN];
+  recv(client_socket, name, sizeof(name), 0); // connect client to server and set name of client
+  set_name(id, name);
+
+  // display welcome message
+  string welcome_message = string(name) + string(" has joined");
+  broadcast_message("#NULL", id);
+  broadcast_message(id, id);
+  broadcast_message(welcome_message, id);
+  shared_print(color(id) + welcome_message + def_color);
+
+  while(1){
+    int bytes_recieved = recv(client_socket, str, sizeof(str), 0);
+    if(bytes_recieved <= 0){
+      return;
+    }
+    if(strcmp(str, "#exit") == 0){
+      // display leaving message
+      string message = string(name)+string(" has left");
+      broadcast_message("#NULL", id);
+      broadcast_message(id, id);
+      broadcast_message(message, id);
+      shared_print(color(id) + message + def_col);
+      end_connection(id);
+      return;
+    }
+    broadcast_message(string(name), id);
+    broadcast_message(id, id);
+    broadcast_message(string(str), id);
+    shared_print(color(id) + name + " : " + def_col + str);
+  }
+}
