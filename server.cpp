@@ -63,7 +63,7 @@ int main(){
   int client_socket;
   unsigned int len = sizeof(sockaddr_in);
 
-  cout << colors[NUM_COLORS-1] << "\n\t ====== Welcome to the TalkALot Chat Haus ======   " << endl << def_col;
+  cout << colors[NUM_COLORS-1] << "\n\t ====== Welcome to the TalkALot Chat Haus =======   " << endl << def_col;
 
   while(1){
     if((client_socket = accept(server_socket, (struct sockaddr *) &client, &len)) == -1){
