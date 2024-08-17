@@ -63,7 +63,7 @@ int main(){
   int client_socket;
   unsigned int len = sizeof(sockaddr_in);
 
-  cout << color[NUM_COLORS-1] << "\n\t ====== Welcome to the TalkALot Chat Haus ======   " << endl << def_col;
+  cout << colors[NUM_COLORS-1] << "\n\t ====== Welcome to the TalkALot Chat Haus ======   " << endl << def_col;
 
   while(1){
     if((client_socket = accept(server_socket, (struct sockaddr *) &client, &len)) == -1){
@@ -94,7 +94,7 @@ string color(int code){
 void set_name(int id, char name[]){
   for(int i = 0; i < clients.size(); i++){
     if(clients[i].id == id){
-      client[i].name = string(name);
+      clients[i].name = string(name);
     }
   }
 }
@@ -122,7 +122,7 @@ int broadcast_message(string message, int sender_id){
 // broadcast a number to all clients except the sender
 int broadcast_message(int num, int send_id){
   for(int i = 0; i < clients.size(); i++){
-    if(clients[i].id != sender_id){
+    if(clients[i].id != send_id){
       send(clients[i].socket, &num, sizeof(num), 0);
     }
   }
@@ -150,7 +150,7 @@ void handle_client(int client_socket, int id){
   broadcast_message("#NULL", id);
   broadcast_message(id, id);
   broadcast_message(welcome_message, id);
-  shared_print(color(id) + welcome_message + def_color);
+  shared_print(color(id) + welcome_message + def_col);
 
   while(1){
     int bytes_recieved = recv(client_socket, str, sizeof(str), 0);
