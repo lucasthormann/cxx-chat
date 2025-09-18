@@ -48,7 +48,7 @@ int main(){
   cin.getline(name, MAX_LEN);
   send(client_socket,name,sizeof(name),0);
 
-  cout << colors[NUM_COLORS-1] << "\n\t ====== Welcome to the TalkALot Chat Haus ====== " << endl << def_col;
+  cout << colors[NUM_COLORS-1] << "\n\t ====== Welcome to the Chat Haus ====== " << endl << def_col;
 
   thread t1(send_message, client_socket); // thread to process message sending
   thread t2(recv_message, client_socket); // thread to process message recieving
