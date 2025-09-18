@@ -1,10 +1,10 @@
 This application was implemented in C++ using the programming technique referred to as multithreading. I've implemented a simple client-server architecture using socket programming.
 
-# Dependencies:
+## Dependencies:
 * g++
 * Ubuntu 24.04 LTS or later
 
-## How To Compile and Run
+# How To Compile and Run
 
 1. Clone the rep
 ```
