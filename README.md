@@ -1,10 +1,17 @@
-This application was implemented in C++ using the semi-modern concept of multithreading and a realiable (yet outdated) means of  networking using socket programming.
+This application was implemented in C++ using the programming technique referred to as multithreading. I've implemented a simple client-server architecture using socket programming.
 
-## How To Compille and Run
+# Dependencies:
+* g++
+* Ubuntu 24.04 LTS or later
+
+## How To Compile and Run
 
 1. Clone the rep
+```
+git clone https://github.com/lucasthormann/TalkALot.git
+```
 
-2. Run following commands in order to compile the files using GNUs compiler
+3. Run following commands in order to compile the files using g++ (a compiler-driver of the GNU Compiler Collection)
 ```
 g++ server.cpp -lpthread -o server
 g++ client.cpp -lpthread -o client
