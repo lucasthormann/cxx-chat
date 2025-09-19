@@ -8,7 +8,7 @@ This application was implemented in C++ using the programming technique referred
 
 1. Clone the rep
 ```
-git clone https://github.com/lucasthormann/TalkALot.git
+git clone https://github.com/lucasthormann/cxx-chat.git
 ```
 
 3. Run following commands in order to compile the files using g++ (a compiler-driver of the GNU Compiler Collection)
